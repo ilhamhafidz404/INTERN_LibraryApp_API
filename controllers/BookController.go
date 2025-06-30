@@ -5,9 +5,20 @@ import (
 	"library_app/helpers"
 	"library_app/models"
 
+	_ "library_app/dto"
+
 	"github.com/gofiber/fiber/v2"
 )
 
+// GetBooks godoc
+// @Summary Get all books
+// @Description Ambil semua data buku
+// @Tags Books
+// @Accept json
+// @Produce json
+// @Success 200 {object} dto.ResponseSuccess
+// @Failure 500 {object} dto.ResponseError
+// @Router /api/books [get]
 func GetBooks(c *fiber.Ctx) error {
     var books []models.Book
 

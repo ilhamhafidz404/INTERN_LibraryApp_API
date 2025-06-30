@@ -1,0 +1,52 @@
+basePath: /
+definitions:
+  dto.ResponseError:
+    properties:
+      code:
+        type: string
+      data:
+        items:
+          type: string
+        type: array
+      message:
+        type: string
+      success:
+        type: boolean
+    type: object
+  dto.ResponseSuccess:
+    properties:
+      code:
+        type: string
+      data: {}
+      message:
+        type: string
+      success:
+        type: boolean
+    type: object
+host: localhost:3000
+info:
+  contact: {}
+  description: REST API untuk manajemen buku dan user
+  title: Library App API
+  version: "1.0"
+paths:
+  /api/books:
+    get:
+      consumes:
+      - application/json
+      description: Ambil semua data buku
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.ResponseSuccess'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ResponseError'
+      summary: Get all books
+      tags:
+      - Books
+swagger: "2.0"
