@@ -7,7 +7,9 @@ import (
 	"library_app/routes"
 
 	swagger "github.com/arsmn/fiber-swagger/v2"
+
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 )
 
 // @title Library App API
@@ -18,22 +20,24 @@ import (
 func main() {
     app := fiber.New()
 
-    // Connect & Migrate DB
+    // -------- Connect & Migrate DB
     database.Connect()
     database.DB.AutoMigrate(
         models.Book{},
         &models.User{},
     )
 
-    // Root route
     app.Get("/", func(c *fiber.Ctx) error {
         return c.SendString("Library App API Service!")
     })
 
-    // Swagger route
+
+    // -------- Swagger Init
+    app.Use(cors.New())
     app.Get("/swagger/*", swagger.HandlerDefault)
 
-    // Setup other routes
+
+    // -------- Setup other routes
     routes.SetupRoutes(app)
 
     // Start server
