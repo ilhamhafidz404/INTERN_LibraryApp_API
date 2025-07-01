@@ -50,6 +50,12 @@ func Login(c *fiber.Ctx) error {
 		return helpers.ResponseError(c, "ALP-004", "Invalid Password")
 	}
 
+	// Generate JWT
+	token, err := helpers.GenerateJWT(student.ID, student.NISN)
+	if err != nil {
+		return helpers.ResponseError(c, "ALP-008", "Gagal generate token")
+	}
+
 	// Prepare Reponse
 	DateOfBirth, err := time.Parse("2006-01-02", student.DateOfBirth.Format("2006-01-02"))
 	if err != nil {
@@ -58,7 +64,7 @@ func Login(c *fiber.Ctx) error {
 
 	PlaceAndDateOfBirth := fmt.Sprintf("%s, %s", student.PlaceOfBirth, helpers.FormatTanggalIndonesia(DateOfBirth))
 
-	response := dto.LoginResponse{
+	loginUserResponse := dto.LoginUserResponse{
 		ID: student.ID,
 		Name: student.Name,
 		NISN: student.NISN,
@@ -67,6 +73,11 @@ func Login(c *fiber.Ctx) error {
 		MotherName: student.MotherName,
 		Gender: student.Gender,
 		Level: student.Level,
+	}
+
+	response := dto.LoginResponse {
+		Token: token,
+		User: loginUserResponse,
 	}
 
 	return helpers.ResponseSuccess(c, "Login Success", response)

@@ -33,7 +33,6 @@ definitions:
         type: string
       nik:
         maxLength: 16
-        minLength: 16
         type: string
       nisn:
         maxLength: 10
@@ -48,7 +47,6 @@ definitions:
     - date_of_birth
     - gender
     - level
-    - mother_name
     - name
     - password
     - place_of_birth
@@ -99,6 +97,8 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/dto.ResponseError'
+      security:
+      - BearerAuth: []
       summary: Get all books
       tags:
       - Books
@@ -162,4 +162,10 @@ paths:
       summary: Post Register
       tags:
       - Auth
+securityDefinitions:
+  BearerAuth:
+    description: 'Masukkan token Anda dengan format: Bearer <token>'
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"

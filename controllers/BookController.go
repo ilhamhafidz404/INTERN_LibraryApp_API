@@ -16,6 +16,7 @@ import (
 // @Tags Books
 // @Accept json
 // @Produce json
+// @Security BearerAuth
 // @Success 200 {object} dto.ResponseSuccess
 // @Failure 500 {object} dto.ResponseError
 // @Router /api/books [get]

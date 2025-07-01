@@ -1,0 +1,9 @@
+.env
+
+# Ignore executable binaries
+*.exe
+
+# Ignore Go build output
+/debug
+/dist
+bin/

@@ -17,6 +17,11 @@ const docTemplate = `{
     "paths": {
         "/api/books": {
             "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Ambil semua data buku",
                 "consumes": [
                     "application/json"
@@ -160,7 +165,6 @@ const docTemplate = `{
                 "date_of_birth",
                 "gender",
                 "level",
-                "mother_name",
                 "name",
                 "password",
                 "place_of_birth"
@@ -195,8 +199,7 @@ const docTemplate = `{
                 },
                 "nik": {
                     "type": "string",
-                    "maxLength": 16,
-                    "minLength": 16
+                    "maxLength": 16
                 },
                 "nisn": {
                     "type": "string",
@@ -245,6 +248,14 @@ const docTemplate = `{
                     "type": "boolean"
                 }
             }
+        }
+    },
+    "securityDefinitions": {
+        "BearerAuth": {
+            "description": "Masukkan token Anda dengan format: Bearer \u003ctoken\u003e",
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
         }
     }
 }`

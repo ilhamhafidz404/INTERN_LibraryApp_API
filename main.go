@@ -17,6 +17,10 @@ import (
 // @description REST API untuk manajemen buku dan user
 // @host localhost:3000
 // @BasePath /
+// @securityDefinitions.apikey BearerAuth
+// @in header
+// @name Authorization
+// @description Masukkan token Anda dengan format: Bearer <token>
 func main() {
     app := fiber.New()
 
