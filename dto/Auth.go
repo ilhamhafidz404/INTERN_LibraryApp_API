@@ -6,6 +6,17 @@ type LoginRequest struct {
 	Password string `json:"password" validate:"required"`
 }
 
+type LoginResponse struct {
+	ID    					uint   	`json:"id"`
+	Name  					string 	`json:"name"`
+	NISN  					string 	`json:"nisn"`
+	NIK   					string	`json:"nik"` 
+	PlaceAndDateOfBirth 	string 	`json:"place_and_date_of_birth"`       
+    MotherName   			string 	`json:"mother_name"`           
+    Gender       			string 	`json:"gender"`
+    Level 		 			string 	`json:"level"` 
+}
+
 // REGISTER
 type RegisterRequest struct {
 	NISN         	string 	`json:"nisn" validate:"min=10,max=10"`         

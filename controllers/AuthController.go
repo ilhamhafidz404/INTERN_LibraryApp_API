@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"library_app/database"
 	"library_app/dto"
 	"library_app/helpers"
@@ -32,24 +33,43 @@ func Login(c *fiber.Ctx) error {
         return helpers.ResponseError(c, "ALP-004", "Invalid request body")
     }
 
-    // Validasi field kosong
-    if payload.Username == "" || payload.Password == "" {
-        return helpers.ResponseError(c, "ALP-003", "Username dan password wajib diisi")
-    }
+    // Validasi
+    validate := validator.New()
+	if err := validate.Struct(payload); err != nil {
+		return helpers.ResponseError(c, "ALP-003", "Validation Failed: "+err.Error())
+	}
 
 	// Ambil data ke database
-	// sqlQuery := `
-	// 	SELECT
-	// 		*
-	// 	FROM
-	// 		users
-	// 	WHERE
-	// 		nisn = ?
-	// 	AND
-	// 		password = ?
-	// `
+	var student models.Student
+	if err := database.DB.Where("nisn = ?", payload.Username).First(&student).Error; err != nil {
+		return helpers.ResponseError(c, "ALP-002", "Student not Found")
+	}
 
-	return nil
+	// Cocokkan password dengan hash
+	if !helpers.CheckPassword(payload.Password, student.Password) {
+		return helpers.ResponseError(c, "ALP-004", "Invalid Password")
+	}
+
+	// Prepare Reponse
+	DateOfBirth, err := time.Parse("2006-01-02", student.DateOfBirth.Format("2006-01-02"))
+	if err != nil {
+		return helpers.ResponseError(c, "ALP-004", "Invalid Date Format")
+	}
+
+	PlaceAndDateOfBirth := fmt.Sprintf("%s, %s", student.PlaceOfBirth, helpers.FormatTanggalIndonesia(DateOfBirth))
+
+	response := dto.LoginResponse{
+		ID: student.ID,
+		Name: student.Name,
+		NISN: student.NISN,
+		NIK: student.NIK,
+		PlaceAndDateOfBirth: PlaceAndDateOfBirth,
+		MotherName: student.MotherName,
+		Gender: student.Gender,
+		Level: student.Level,
+	}
+
+	return helpers.ResponseSuccess(c, "Login Success", response)
 }
 
 // AuthRegister godoc

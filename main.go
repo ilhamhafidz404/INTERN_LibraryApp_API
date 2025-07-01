@@ -23,6 +23,7 @@ func main() {
     // -------- Connect & Migrate DB
     database.Connect()
     database.DB.AutoMigrate(
+        &models.Admin{},
         models.Book{},
         &models.Student{},
     )
