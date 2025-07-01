@@ -24,7 +24,7 @@ func main() {
     database.Connect()
     database.DB.AutoMigrate(
         models.Book{},
-        &models.User{},
+        &models.Student{},
     )
 
     app.Get("/", func(c *fiber.Ctx) error {
