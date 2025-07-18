@@ -46,13 +46,13 @@ func Login(c *fiber.Ctx) error {
 	if result.Error == nil && result.RowsAffected > 0 {
 		// Password cocok?
 		if !helpers.CheckPassword(payload.Password, student.Password) {
-			return helpers.ResponseError(c, "ALP-004", "Invalid Password")
+			return helpers.ResponseError(c, "ALP-003", "Invalid Password")
 		}
 
 		// Generate JWT
 		token, err := helpers.GenerateJWT(student.ID, student.NISN)
 		if err != nil {
-			return helpers.ResponseError(c, "ALP-008", "Gagal generate token")
+			return helpers.ResponseError(c, "ALP-004", "Gagal generate token")
 		}
 
 		// Buat response
@@ -60,7 +60,8 @@ func Login(c *fiber.Ctx) error {
 			ID:                  student.ID,
 			Name:                student.Name,
 			Username:            student.NISN,
-			Level:               student.Level,
+			// Level:               student.Level,
+			Level:               "student",
 		}
 
 		response = dto.LoginResponse{
@@ -84,7 +85,7 @@ func Login(c *fiber.Ctx) error {
 		// Buat token admin
 		token, err := helpers.GenerateJWT(admin.ID, admin.Username)
 		if err != nil {
-			return helpers.ResponseError(c, "ALP-008", "Gagal generate token")
+			return helpers.ResponseError(c, "ALP-004", "Gagal generate token")
 		}
 
 		loginUserResponse := dto.LoginUserResponse{
@@ -103,7 +104,7 @@ func Login(c *fiber.Ctx) error {
 	}
 
 	// Jika tidak ditemukan di student maupun admin
-	return helpers.ResponseError(c, "ALP-005", "User not found")
+	return helpers.ResponseError(c, "ALP-002", "User not found")
 
 }
 

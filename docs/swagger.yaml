@@ -1,5 +1,22 @@
 basePath: /
 definitions:
+  dto.BookRequest:
+    properties:
+      author:
+        type: string
+      isbn:
+        type: string
+      publisher:
+        type: string
+      slug:
+        type: string
+      title:
+        type: string
+      total:
+        type: integer
+      year:
+        type: integer
+    type: object
   dto.LoginRequest:
     properties:
       password:
@@ -100,6 +117,33 @@ paths:
       security:
       - BearerAuth: []
       summary: Get all books
+      tags:
+      - Books
+    post:
+      consumes:
+      - application/json
+      description: Create data buku
+      parameters:
+      - description: Book payload
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.BookRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.ResponseSuccess'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ResponseError'
+      security:
+      - BearerAuth: []
+      summary: Create Book
       tags:
       - Books
   /api/login:

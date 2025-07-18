@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"library_app/database"
+	"library_app/dto"
 	"library_app/helpers"
 	"library_app/models"
 
@@ -28,4 +29,21 @@ func GetBooks(c *fiber.Ctx) error {
     }
 
     return helpers.ResponseSuccess(c, "Success get data Books", books)
+}
+
+// PostBooks godoc
+// @Summary Create Book
+// @Description Create data buku
+// @Tags Books
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Success 200 {object} dto.ResponseSuccess
+// @Failure 500 {object} dto.ResponseError
+// @Param request body dto.BookRequest true "Book payload"
+// @Router /api/books [post]
+func StoreBook(c *fiber.Ctx) error {
+    var payload dto.BookRequest
+
+    return helpers.ResponseSuccess(c, "Success get data Books", payload)
 }
