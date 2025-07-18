@@ -21,4 +21,5 @@ func SetupRoutes(app *fiber.App) {
 	// Books
     protected.Get("/books", controllers.GetBooks)
     protected.Post("/books", controllers.StoreBook)
+    protected.Put("/books/:id", controllers.UpdateBook)
 }

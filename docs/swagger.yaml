@@ -146,6 +146,39 @@ paths:
       summary: Create Book
       tags:
       - Books
+  /api/books/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Update data buku
+      parameters:
+      - description: Book payload
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.BookRequest'
+      - description: ID Buku
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.ResponseSuccess'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.ResponseError'
+      security:
+      - BearerAuth: []
+      summary: Update Book
+      tags:
+      - Books
   /api/login:
     post:
       consumes:
