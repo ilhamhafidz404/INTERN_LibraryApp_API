@@ -136,7 +136,7 @@ paths:
       - application/json
       description: Hapus data buku
       parameters:
-      - description: ID Buku
+      - description: Book id
         in: path
         name: id
         required: true
@@ -160,7 +160,7 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/dto.BookRequest'
-      - description: ID Buku
+      - description: Book id
         in: path
         name: id
         required: true

@@ -96,7 +96,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "integer",
-                        "description": "ID Buku",
+                        "description": "Book id",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -124,7 +124,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "ID Buku",
+                        "description": "Book id",
                         "name": "id",
                         "in": "path",
                         "required": true

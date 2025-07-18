@@ -21,13 +21,14 @@ import (
 // @Security BearerAuth
 // @Router /api/books [get]
 func GetBooks(c *fiber.Ctx) error {
-    var books []models.Book
+    var books []dto.Book
 
-    if err := database.DB.Find(&books).Error; err != nil {
-        return helpers.ResponseError(c, "ALP-003", "Failed get data Books")
-    }
+	if err := database.DB.Model(&models.Book{}).
+		Scan(&books).Error; err != nil {
+		return helpers.ResponseError(c, "ALP-005", "Failed get data Books")
+	}
 
-    return helpers.ResponseSuccess(c, "Success get data Books", books)
+	return helpers.ResponseSuccess(c, "Success get data Books", books)
 }
 
 // PostBooks godoc
@@ -69,7 +70,19 @@ func StoreBook(c *fiber.Ctx) error {
 		return helpers.ResponseError(c, "ALP-005", "Failed Insert Book")
 	}
 
-    return helpers.ResponseSuccess(c, "Create Success", book)
+	// 5. Preparation Response
+	responseBook := dto.Book {
+		ID: book.ID,
+		Title: book.Title,
+		Publisher: book.Publisher,
+		Author: book.Author,
+		ISBN: book.ISBN,
+		Year: book.Year,
+		Total: book.Total,
+		CreatedBy: book.CreatedBy,
+	}
+
+    return helpers.ResponseSuccess(c, "Create Success", responseBook)
 }
 
 // PutBooks godoc
@@ -80,7 +93,7 @@ func StoreBook(c *fiber.Ctx) error {
 // @Produce json
 // @Security BearerAuth
 // @Param request body dto.BookRequest true "Book payload"
-// @Param id path int true "ID Buku"
+// @Param id path int true "Book id"
 // @Router /api/books/{id} [put]
 func UpdateBook(c *fiber.Ctx) error {
     var payload dto.BookRequest
@@ -122,7 +135,19 @@ func UpdateBook(c *fiber.Ctx) error {
 		return helpers.ResponseError(c, "ALP-005", "Gagal update buku")
 	}
 
-	return helpers.ResponseSuccess(c, "Update Success", book)
+	// 7. Preparation Response
+	responseBook := dto.Book {
+		ID: book.ID,
+		Title: book.Title,
+		Publisher: book.Publisher,
+		Author: book.Author,
+		ISBN: book.ISBN,
+		Year: book.Year,
+		Total: book.Total,
+		CreatedBy: book.CreatedBy,
+	}
+
+	return helpers.ResponseSuccess(c, "Update Success", responseBook)
 }
 
 // DeleteBook godoc
@@ -132,7 +157,7 @@ func UpdateBook(c *fiber.Ctx) error {
 // @Accept json
 // @Produce json
 // @Security BearerAuth
-// @Param id path int true "ID Buku"
+// @Param id path int true "Book id"
 // @Router /api/books/{id} [delete]
 func DeleteBook(c *fiber.Ctx) error {
 	// 1. Ambil ID dari parameter

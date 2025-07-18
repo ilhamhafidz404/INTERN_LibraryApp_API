@@ -90,7 +90,7 @@
                     },
                     {
                         "type": "integer",
-                        "description": "ID Buku",
+                        "description": "Book id",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -118,7 +118,7 @@
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "ID Buku",
+                        "description": "Book id",
                         "name": "id",
                         "in": "path",
                         "required": true
