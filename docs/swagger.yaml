@@ -91,6 +91,25 @@ definitions:
       success:
         type: boolean
     type: object
+  dto.StudentUpdateProfileRequest:
+    properties:
+      date_of_birth:
+        type: string
+      gender:
+        type: string
+      level:
+        type: string
+      mother_name:
+        type: string
+      name:
+        type: string
+      nik:
+        type: string
+      nisn:
+        type: string
+      place_of_birth:
+        type: string
+    type: object
 host: localhost:3000
 info:
   contact: {}
@@ -203,6 +222,49 @@ paths:
       summary: Post Login
       tags:
       - Auth
+  /api/profile/{student_id}:
+    get:
+      consumes:
+      - application/json
+      description: Lihat Detail Profile Siswa
+      parameters:
+      - description: Student id
+        in: path
+        name: student_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - BearerAuth: []
+      summary: Get Student Profile
+      tags:
+      - Profile
+    put:
+      consumes:
+      - application/json
+      description: Update Student Profile
+      parameters:
+      - description: Student Request payload
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.StudentUpdateProfileRequest'
+      - description: Student id
+        in: path
+        name: student_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - BearerAuth: []
+      summary: Update Profile
+      tags:
+      - Profile
   /api/register:
     post:
       consumes:

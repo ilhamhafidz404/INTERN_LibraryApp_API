@@ -163,7 +163,7 @@ func DeleteBook(c *fiber.Ctx) error {
 	// 1. Ambil ID dari parameter
 	id := c.Params("id")
 	if id == "" {
-		return helpers.ResponseError(c, "ALP-001", "ID tidak ditemukan di URL")
+		return helpers.ResponseError(c, "ALP-002", "ID tidak ditemukan di URL")
 	}
 
 	// 2. Cek apakah buku ada

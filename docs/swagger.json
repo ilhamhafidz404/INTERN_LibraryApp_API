@@ -173,6 +173,73 @@
                 }
             }
         },
+        "/api/profile/{student_id}": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Lihat Detail Profile Siswa",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Get Student Profile",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Student id",
+                        "name": "student_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            },
+            "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Update Student Profile",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Update Profile",
+                "parameters": [
+                    {
+                        "description": "Student Request payload",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.StudentUpdateProfileRequest"
+                        }
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Student id",
+                        "name": "student_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
         "/api/register": {
             "post": {
                 "description": "Register Library App",
@@ -350,6 +417,35 @@
                 },
                 "success": {
                     "type": "boolean"
+                }
+            }
+        },
+        "dto.StudentUpdateProfileRequest": {
+            "type": "object",
+            "properties": {
+                "date_of_birth": {
+                    "type": "string"
+                },
+                "gender": {
+                    "type": "string"
+                },
+                "level": {
+                    "type": "string"
+                },
+                "mother_name": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "nik": {
+                    "type": "string"
+                },
+                "nisn": {
+                    "type": "string"
+                },
+                "place_of_birth": {
+                    "type": "string"
                 }
             }
         }
