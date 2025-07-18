@@ -105,15 +105,7 @@ paths:
       description: Ambil semua data buku
       produces:
       - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/dto.ResponseSuccess'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/dto.ResponseError'
+      responses: {}
       security:
       - BearerAuth: []
       summary: Get all books
@@ -132,21 +124,31 @@ paths:
           $ref: '#/definitions/dto.BookRequest'
       produces:
       - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/dto.ResponseSuccess'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/dto.ResponseError'
+      responses: {}
       security:
       - BearerAuth: []
       summary: Create Book
       tags:
       - Books
   /api/books/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Hapus data buku
+      parameters:
+      - description: ID Buku
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - BearerAuth: []
+      summary: Delete Book
+      tags:
+      - Books
     put:
       consumes:
       - application/json
@@ -165,15 +167,7 @@ paths:
         type: integer
       produces:
       - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/dto.ResponseSuccess'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/dto.ResponseError'
+      responses: {}
       security:
       - BearerAuth: []
       summary: Update Book

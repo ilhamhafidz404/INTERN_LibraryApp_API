@@ -22,4 +22,5 @@ func SetupRoutes(app *fiber.App) {
     protected.Get("/books", controllers.GetBooks)
     protected.Post("/books", controllers.StoreBook)
     protected.Put("/books/:id", controllers.UpdateBook)
+    protected.Delete("/books/:id", controllers.DeleteBook)
 }

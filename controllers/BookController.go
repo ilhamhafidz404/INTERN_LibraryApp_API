@@ -19,8 +19,6 @@ import (
 // @Accept json
 // @Produce json
 // @Security BearerAuth
-// @Success 200 {object} dto.ResponseSuccess
-// @Failure 500 {object} dto.ResponseError
 // @Router /api/books [get]
 func GetBooks(c *fiber.Ctx) error {
     var books []models.Book
@@ -39,8 +37,6 @@ func GetBooks(c *fiber.Ctx) error {
 // @Accept json
 // @Produce json
 // @Security BearerAuth
-// @Success 200 {object} dto.ResponseSuccess
-// @Failure 500 {object} dto.ResponseError
 // @Param request body dto.BookRequest true "Book payload"
 // @Router /api/books [post]
 func StoreBook(c *fiber.Ctx) error {
@@ -83,8 +79,6 @@ func StoreBook(c *fiber.Ctx) error {
 // @Accept json
 // @Produce json
 // @Security BearerAuth
-// @Success 200 {object} dto.ResponseSuccess
-// @Failure 500 {object} dto.ResponseError
 // @Param request body dto.BookRequest true "Book payload"
 // @Param id path int true "ID Buku"
 // @Router /api/books/{id} [put]
@@ -130,3 +124,34 @@ func UpdateBook(c *fiber.Ctx) error {
 
 	return helpers.ResponseSuccess(c, "Update Success", book)
 }
+
+// DeleteBook godoc
+// @Summary Delete Book
+// @Description Hapus data buku
+// @Tags Books
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param id path int true "ID Buku"
+// @Router /api/books/{id} [delete]
+func DeleteBook(c *fiber.Ctx) error {
+	// 1. Ambil ID dari parameter
+	id := c.Params("id")
+	if id == "" {
+		return helpers.ResponseError(c, "ALP-001", "ID tidak ditemukan di URL")
+	}
+
+	// 2. Cek apakah buku ada
+	var book models.Book
+	if err := database.DB.First(&book, id).Error; err != nil {
+		return helpers.ResponseError(c, "ALP-002", "Buku tidak ditemukan")
+	}
+
+	// 3. Hapus buku
+	if err := database.DB.Delete(&book).Error; err != nil {
+		return helpers.ResponseError(c, "ALP-005", "Gagal menghapus buku")
+	}
+
+	return helpers.ResponseSuccess(c, "Delete Success", nil)
+}
+
