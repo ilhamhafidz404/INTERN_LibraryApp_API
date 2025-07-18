@@ -8,6 +8,7 @@ import (
 
 	_ "library_app/dto"
 
+	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -45,5 +46,32 @@ func GetBooks(c *fiber.Ctx) error {
 func StoreBook(c *fiber.Ctx) error {
     var payload dto.BookRequest
 
-    return helpers.ResponseSuccess(c, "Success get data Books", payload)
+    // 1. Parse body
+	if err := c.BodyParser(&payload); err != nil {
+		return helpers.ResponseError(c, "ALP-004", "Invalid Request Body")
+	}
+
+    // 2. Validasi
+	validate := validator.New()
+	if err := validate.Struct(payload); err != nil {
+		return helpers.ResponseError(c, "ALP-003", "Validation Failed: "+err.Error())
+	}
+
+    // 3. Insert Book
+	book := models.Book{
+		Title: payload.Title,
+        Publisher: payload.Publisher,
+        Author: payload.Author,
+        ISBN: payload.ISBN,
+        Year: payload.Year,
+        Total: payload.Total,
+        CreatedBy: 1,
+	}
+
+	// 4. Simpan ke database
+	if err := database.DB.Create(&book).Error; err != nil {
+		return helpers.ResponseError(c, "ALP-005", "Failed Insert Book")
+	}
+
+    return helpers.ResponseSuccess(c, "Create Success", book)
 }
