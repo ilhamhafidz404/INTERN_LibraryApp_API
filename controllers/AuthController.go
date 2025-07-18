@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"library_app/database"
 	"library_app/dto"
 	"library_app/helpers"
@@ -27,60 +26,85 @@ import (
 // @Router /api/login [post]
 func Login(c *fiber.Ctx) error {
     var payload dto.LoginRequest
+	var response dto.LoginResponse
 
-    // Parse dan validasi body
-    if err := c.BodyParser(&payload); err != nil {
-        return helpers.ResponseError(c, "ALP-004", "Invalid request body")
-    }
+	// Parse dan validasi body
+	if err := c.BodyParser(&payload); err != nil {
+		return helpers.ResponseError(c, "ALP-004", "Invalid request body")
+	}
 
-    // Validasi
-    validate := validator.New()
+	// Validasi struktur payload
+	validate := validator.New()
 	if err := validate.Struct(payload); err != nil {
 		return helpers.ResponseError(c, "ALP-003", "Validation Failed: "+err.Error())
 	}
 
-	// Ambil data ke database
+	// Coba cari siswa terlebih dahulu
 	var student models.Student
-	if err := database.DB.Where("nisn = ?", payload.Username).First(&student).Error; err != nil {
-		return helpers.ResponseError(c, "ALP-002", "Student not Found")
+	result := database.DB.Where("nisn = ?", payload.Username).First(&student)
+
+	if result.Error == nil && result.RowsAffected > 0 {
+		// Password cocok?
+		if !helpers.CheckPassword(payload.Password, student.Password) {
+			return helpers.ResponseError(c, "ALP-004", "Invalid Password")
+		}
+
+		// Generate JWT
+		token, err := helpers.GenerateJWT(student.ID, student.NISN)
+		if err != nil {
+			return helpers.ResponseError(c, "ALP-008", "Gagal generate token")
+		}
+
+		// Buat response
+		loginUserResponse := dto.LoginUserResponse{
+			ID:                  student.ID,
+			Name:                student.Name,
+			Username:            student.NISN,
+			Level:               student.Level,
+		}
+
+		response = dto.LoginResponse{
+			Token: token,
+			Auth:  loginUserResponse,
+		}
+
+		return helpers.ResponseSuccess(c, "Login Success", response)
 	}
 
-	// Cocokkan password dengan hash
-	if !helpers.CheckPassword(payload.Password, student.Password) {
-		return helpers.ResponseError(c, "ALP-004", "Invalid Password")
+	// Jika bukan siswa, coba cari admin
+	var admin models.Admin
+	result = database.DB.Where("username = ?", payload.Username).First(&admin)
+
+	if result.Error == nil && result.RowsAffected > 0 {
+		// Validasi password admin
+		if !helpers.CheckPassword(payload.Password, admin.Password) {
+			return helpers.ResponseError(c, "ALP-004", "Invalid Password")
+		}
+
+		// Buat token admin
+		token, err := helpers.GenerateJWT(admin.ID, admin.Username)
+		if err != nil {
+			return helpers.ResponseError(c, "ALP-008", "Gagal generate token")
+		}
+
+		loginUserResponse := dto.LoginUserResponse{
+			ID:                  admin.ID,
+			Name:                admin.Name,
+			Username:            admin.Username,
+			Level:               admin.Level,
+		}
+
+		response = dto.LoginResponse{
+			Token: token,
+			Auth:  loginUserResponse,
+		}
+
+		return helpers.ResponseSuccess(c, "Login Success", response)
 	}
 
-	// Generate JWT
-	token, err := helpers.GenerateJWT(student.ID, student.NISN)
-	if err != nil {
-		return helpers.ResponseError(c, "ALP-008", "Gagal generate token")
-	}
+	// Jika tidak ditemukan di student maupun admin
+	return helpers.ResponseError(c, "ALP-005", "User not found")
 
-	// Prepare Reponse
-	DateOfBirth, err := time.Parse("2006-01-02", student.DateOfBirth.Format("2006-01-02"))
-	if err != nil {
-		return helpers.ResponseError(c, "ALP-004", "Invalid Date Format")
-	}
-
-	PlaceAndDateOfBirth := fmt.Sprintf("%s, %s", student.PlaceOfBirth, helpers.FormatTanggalIndonesia(DateOfBirth))
-
-	loginUserResponse := dto.LoginUserResponse{
-		ID: student.ID,
-		Name: student.Name,
-		NISN: student.NISN,
-		NIK: student.NIK,
-		PlaceAndDateOfBirth: PlaceAndDateOfBirth,
-		MotherName: student.MotherName,
-		Gender: student.Gender,
-		Level: student.Level,
-	}
-
-	response := dto.LoginResponse {
-		Token: token,
-		User: loginUserResponse,
-	}
-
-	return helpers.ResponseSuccess(c, "Login Success", response)
 }
 
 // AuthRegister godoc

@@ -8,17 +8,13 @@ type LoginRequest struct {
 
 type LoginResponse struct {
 	Token 	string 				`json:"token"`
-	User 	LoginUserResponse 	`json:"user"`
+	Auth 	LoginUserResponse 	`json:"auth"`
 }
 
 type LoginUserResponse struct {
 	ID    					uint   	`json:"id"`
 	Name  					string 	`json:"name"`
-	NISN  					string 	`json:"nisn"`
-	NIK   					string	`json:"nik"` 
-	PlaceAndDateOfBirth 	string 	`json:"place_and_date_of_birth"`       
-    MotherName   			string 	`json:"mother_name"`           
-    Gender       			string 	`json:"gender"`
+	Username  				string 	`json:"username"`
     Level 		 			string 	`json:"level"` 
 }
 
