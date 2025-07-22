@@ -30,6 +30,7 @@ func main() {
         &models.Admin{},
         models.Book{},
         &models.Student{},
+        models.LendingHistory{},
     )
 
     app.Get("/", func(c *fiber.Ctx) error {

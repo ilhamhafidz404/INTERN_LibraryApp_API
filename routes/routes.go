@@ -13,6 +13,7 @@ func SetupRoutes(app *fiber.App) {
 	// Auth
     api.Post("/login", controllers.Login)
     api.Post("/register", controllers.Register)
+    api.Post("/logout", controllers.Register)
 	
 	protected := api.Group("", jwtware.New(jwtware.Config{
 		SigningKey: []byte("secret_jwt_key"),
