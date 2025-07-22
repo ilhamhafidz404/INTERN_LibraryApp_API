@@ -26,3 +26,9 @@ type StudentUpdateProfileRequest struct {
 	Gender       string    `json:"gender"`
 	Level        string    `json:"level"`
 }
+
+type StudentChangePasswordRequest struct {
+	OldPassword         		string    `json:"old_password"`
+	NewPassword         		string    `json:"new_password"`
+	ConfirmationNewPassword     string    `json:"confirmation_new_password"`
+}

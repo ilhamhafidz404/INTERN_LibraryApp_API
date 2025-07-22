@@ -91,6 +91,15 @@ definitions:
       success:
         type: boolean
     type: object
+  dto.StudentChangePasswordRequest:
+    properties:
+      confirmation_new_password:
+        type: string
+      new_password:
+        type: string
+      old_password:
+        type: string
+    type: object
   dto.StudentUpdateProfileRequest:
     properties:
       date_of_birth:
@@ -252,6 +261,31 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/dto.StudentUpdateProfileRequest'
+      - description: Student id
+        in: path
+        name: student_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - BearerAuth: []
+      summary: Update Profile
+      tags:
+      - Profile
+  /api/profile/change-password/{student_id}:
+    put:
+      consumes:
+      - application/json
+      description: Update Student Profile
+      parameters:
+      - description: Student Change Password Request payload
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.StudentChangePasswordRequest'
       - description: Student id
         in: path
         name: student_id

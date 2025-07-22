@@ -27,4 +27,5 @@ func SetupRoutes(app *fiber.App) {
 	//Profile
     protected.Get("/profile/:student_id", controllers.GetProfile)
     protected.Put("/profile/:student_id", controllers.UpdateProfile)
+    protected.Put("/profile/change-password/:student_id", controllers.ChangePassword)
 }
