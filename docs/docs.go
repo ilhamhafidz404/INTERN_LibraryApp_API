@@ -133,6 +133,47 @@ const docTemplate = `{
                 "responses": {}
             }
         },
+        "/api/lending-history": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Lihat History Peminjaman",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Lending History"
+                ],
+                "summary": "Get Lending History",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Filter berdasarkan ID siswa",
+                        "name": "student_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Filter tanggal mulai",
+                        "name": "start_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Filter tanggal selesai",
+                        "name": "end_date",
+                        "in": "query"
+                    }
+                ],
+                "responses": {}
+            }
+        },
         "/api/login": {
             "post": {
                 "description": "Login Library App",
@@ -287,7 +328,7 @@ const docTemplate = `{
         },
         "/api/register": {
             "post": {
-                "description": "Register Library App",
+                "description": "Logout Library App",
                 "consumes": [
                     "application/json"
                 ],
@@ -297,7 +338,7 @@ const docTemplate = `{
                 "tags": [
                     "Auth"
                 ],
-                "summary": "Post Register",
+                "summary": "Post Logout",
                 "parameters": [
                     {
                         "description": "Register payload",

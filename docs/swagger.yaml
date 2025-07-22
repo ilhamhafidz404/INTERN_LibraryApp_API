@@ -201,6 +201,32 @@ paths:
       summary: Update Book
       tags:
       - Books
+  /api/lending-history:
+    get:
+      consumes:
+      - application/json
+      description: Lihat History Peminjaman
+      parameters:
+      - description: Filter berdasarkan ID siswa
+        in: query
+        name: student_id
+        type: integer
+      - description: Filter tanggal mulai
+        in: query
+        name: start_date
+        type: string
+      - description: Filter tanggal selesai
+        in: query
+        name: end_date
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - BearerAuth: []
+      summary: Get Lending History
+      tags:
+      - Lending History
   /api/login:
     post:
       consumes:
@@ -303,7 +329,7 @@ paths:
     post:
       consumes:
       - application/json
-      description: Register Library App
+      description: Logout Library App
       parameters:
       - description: Register payload
         in: body
@@ -326,7 +352,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/dto.ResponseError'
-      summary: Post Register
+      summary: Post Logout
       tags:
       - Auth
 securityDefinitions:
