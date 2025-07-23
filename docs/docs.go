@@ -211,7 +211,7 @@ const docTemplate = `{
                         "BearerAuth": []
                     }
                 ],
-                "description": "Update Data History Peminjaman",
+                "description": "Perbarui Data History Peminjaman",
                 "consumes": [
                     "application/json"
                 ],
@@ -238,6 +238,34 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/dto.LendingHistoryRequest"
                         }
+                    }
+                ],
+                "responses": {}
+            },
+            "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Hapus Data History Peminjaman",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Lending History"
+                ],
+                "summary": "Delete Lending History",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID Landing History",
+                        "name": "history_id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {}

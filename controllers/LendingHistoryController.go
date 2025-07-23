@@ -142,7 +142,7 @@ func PostLendingHistory(c *fiber.Ctx) error {
 
 // PUT Lending History godoc
 // @Summary Put Lending History
-// @Description Update Data History Peminjaman
+// @Description Perbarui Data History Peminjaman
 // @Tags Lending History
 // @Accept json
 // @Produce json
@@ -170,7 +170,7 @@ func PutLendingHistory(c *fiber.Ctx) error {
 		return helpers.ResponseError(c, "ALP-003", "Validation Failed: "+err.Error())
 	}
 
-	// 4. Cek apakah student ada
+	// 4. Cek apakah history ada
 	var lendingHistory models.LendingHistory
 	if err := database.DB.First(&lendingHistory, historyID).Error; err != nil {
 		return helpers.ResponseError(c, "ALP-002", "History tidak ditemukan")
@@ -207,5 +207,35 @@ func PutLendingHistory(c *fiber.Ctx) error {
 
 	//
 	return helpers.ResponseSuccess(c, "Update History Success", response)
+}
+
+// DELETE Lending History godoc
+// @Summary Delete Lending History
+// @Description Hapus Data History Peminjaman
+// @Tags Lending History
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param history_id path int true "ID Landing History"
+// @Router /api/lending-history/{history_id} [delete]
+func DeleteLendingHistory(c *fiber.Ctx) error {
+	// 1. Ambil ID dari parameter
+	historyID := c.Params("history_id")
+	if historyID == "" {
+		return helpers.ResponseError(c, "ALP-002", "ID tidak ditemukan di URL")
+	}
+
+	// 2. Cek apakah history ada
+	var lendingHistory models.LendingHistory
+	if err := database.DB.First(&lendingHistory, historyID).Error; err != nil {
+		return helpers.ResponseError(c, "ALP-002", "History tidak ditemukan")
+	}
+
+	// 3. Hapus history
+	if err := database.DB.Delete(&lendingHistory).Error; err != nil {
+		return helpers.ResponseError(c, "ALP-005", "Gagal menghapus buku")
+	}
+
+	return helpers.ResponseSuccess(c, "Delete History Success", nil)
 }
 

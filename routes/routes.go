@@ -34,4 +34,5 @@ func SetupRoutes(app *fiber.App) {
     protected.Get("/lending-history", controllers.GetLendingHistory)
     protected.Post("/lending-history", controllers.PostLendingHistory)
     protected.Put("/lending-history/:history_id", controllers.PutLendingHistory)
+    protected.Delete("/lending-history/:history_id", controllers.DeleteLendingHistory)
 }
