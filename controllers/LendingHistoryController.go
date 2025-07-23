@@ -55,7 +55,7 @@ func GetLendingHistory(c *fiber.Ctx) error {
 		JOIN 
 			books b ON b.id = lh.book_id
 		WHERE
-			1=1
+			lh.deleted_at IS NULL
 	`
 
 	// Tambahkan filter jika ada
