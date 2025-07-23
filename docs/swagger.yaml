@@ -17,6 +17,25 @@ definitions:
       year:
         type: integer
     type: object
+  dto.LendingHistoryRequest:
+    properties:
+      book_id:
+        type: integer
+      end_date:
+        type: string
+      start_date:
+        type: string
+      status:
+        type: string
+      student_id:
+        type: integer
+    required:
+    - book_id
+    - end_date
+    - start_date
+    - status
+    - student_id
+    type: object
   dto.LoginRequest:
     properties:
       password:
@@ -225,6 +244,25 @@ paths:
       security:
       - BearerAuth: []
       summary: Get Lending History
+      tags:
+      - Lending History
+    post:
+      consumes:
+      - application/json
+      description: Tambah Data History Peminjaman
+      parameters:
+      - description: Landing History payload
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.LendingHistoryRequest'
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - BearerAuth: []
+      summary: Post Lending History
       tags:
       - Lending History
   /api/login:

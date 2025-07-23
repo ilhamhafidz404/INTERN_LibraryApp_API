@@ -172,6 +172,36 @@ const docTemplate = `{
                     }
                 ],
                 "responses": {}
+            },
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Tambah Data History Peminjaman",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Lending History"
+                ],
+                "summary": "Post Lending History",
+                "parameters": [
+                    {
+                        "description": "Landing History payload",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.LendingHistoryRequest"
+                        }
+                    }
+                ],
+                "responses": {}
             }
         },
         "/api/login": {
@@ -396,6 +426,33 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "year": {
+                    "type": "integer"
+                }
+            }
+        },
+        "dto.LendingHistoryRequest": {
+            "type": "object",
+            "required": [
+                "book_id",
+                "end_date",
+                "start_date",
+                "status",
+                "student_id"
+            ],
+            "properties": {
+                "book_id": {
+                    "type": "integer"
+                },
+                "end_date": {
+                    "type": "string"
+                },
+                "start_date": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "student_id": {
                     "type": "integer"
                 }
             }

@@ -16,3 +16,16 @@ type LendingHistory struct {
 	CreatedAt     string `json:"created_at"`
 	UpdatedAt     string `json:"updated_at"`
 }
+
+type LendingHistoryRequest struct {
+	BookID    uint   `json:"book_id" validate:"required"`
+	StudentID uint   `json:"student_id" validate:"required"`
+	Status    string `json:"status"  validate:"required"`
+	StartDate string `json:"start_date"  validate:"required"`
+	EndDate   string `json:"end_date"  validate:"required"`
+}
+
+type LendingHistoryResponse struct {
+	StartDate string `json:"start_date"  validate:"required"`
+	EndDate   string `json:"end_date"  validate:"required"`
+}

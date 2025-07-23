@@ -4,9 +4,12 @@ import (
 	"library_app/database"
 	"library_app/dto"
 	"library_app/helpers"
+	"library_app/models"
+	"time"
 
 	_ "library_app/dto"
 
+	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -72,6 +75,68 @@ func GetLendingHistory(c *fiber.Ctx) error {
 		return helpers.ResponseError(c, "ALP-005", "Gagal mengambil data history")
 	}
 
+	if len(histories) <= 0 {
+		return helpers.ResponseError(c, "ALP-002", "History Peminjaman Kosong")
+	}
+	
 	return helpers.ResponseSuccess(c, "Berhasil mengambil data peminjaman", histories)
+}
+
+// POST Lending History godoc
+// @Summary Post Lending History
+// @Description Tambah Data History Peminjaman
+// @Tags Lending History
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param request body dto.LendingHistoryRequest true "Landing History payload"
+// @Router /api/lending-history [post]
+func PostLendingHistory(c *fiber.Ctx) error {
+	var payload dto.LendingHistoryRequest
+
+	// 1. Parse body
+	if err := c.BodyParser(&payload); err != nil {
+		return helpers.ResponseError(c, "ALP-004", "Invalid Request Body")
+	}
+
+	// 2. Validasi
+	validate := validator.New()
+	if err := validate.Struct(payload); err != nil {
+		return helpers.ResponseError(c, "ALP-003", "Validation Failed: "+err.Error())
+	}
+
+	// 3. Convert Date
+	StartDate, err := time.Parse("2006-01-02", payload.StartDate)
+	if err != nil {
+		return helpers.ResponseError(c, "ALP-004", "Invalid Date of Start Date (use YYYY-MM-DD)")
+	}
+
+	EndDate, err := time.Parse("2006-01-02", payload.EndDate)
+	if err != nil {
+		return helpers.ResponseError(c, "ALP-004", "Invalid Date of End Date (use YYYY-MM-DD)")
+	}
+
+	// 4. Insert User
+	history := models.LendingHistory{
+		BookID: payload.BookID,
+		StudentID: payload.StudentID,
+		StartDate: StartDate,
+		EndDate: EndDate,
+		Status: "loaned",
+	}
+
+	// 5. Simpan ke database
+	if err := database.DB.Create(&history).Error; err != nil {
+		return helpers.ResponseError(c, "ALP-005", "Failed Insert Lending History")
+	}
+
+	// 5. Prepare for Response
+	response := dto.LendingHistoryResponse{
+		StartDate: payload.StartDate,
+		EndDate: payload.EndDate,
+	}
+
+	//
+	return helpers.ResponseSuccess(c, "Create History Success", response)
 }
 
