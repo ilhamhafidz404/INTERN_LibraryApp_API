@@ -265,6 +265,31 @@ paths:
       summary: Post Lending History
       tags:
       - Lending History
+  /api/lending-history/{history_id}:
+    put:
+      consumes:
+      - application/json
+      description: Update Data History Peminjaman
+      parameters:
+      - description: ID Landing History
+        in: path
+        name: history_id
+        required: true
+        type: integer
+      - description: Landing History payload
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.LendingHistoryRequest'
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - BearerAuth: []
+      summary: Put Lending History
+      tags:
+      - Lending History
   /api/login:
     post:
       consumes:

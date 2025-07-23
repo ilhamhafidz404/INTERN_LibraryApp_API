@@ -198,6 +198,45 @@
                 "responses": {}
             }
         },
+        "/api/lending-history/{history_id}": {
+            "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Update Data History Peminjaman",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Lending History"
+                ],
+                "summary": "Put Lending History",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID Landing History",
+                        "name": "history_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Landing History payload",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.LendingHistoryRequest"
+                        }
+                    }
+                ],
+                "responses": {}
+            }
+        },
         "/api/login": {
             "post": {
                 "description": "Login Library App",

@@ -140,3 +140,72 @@ func PostLendingHistory(c *fiber.Ctx) error {
 	return helpers.ResponseSuccess(c, "Create History Success", response)
 }
 
+// PUT Lending History godoc
+// @Summary Put Lending History
+// @Description Update Data History Peminjaman
+// @Tags Lending History
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param history_id path int true "ID Landing History"
+// @Param request body dto.LendingHistoryRequest true "Landing History payload"
+// @Router /api/lending-history/{history_id} [put]
+func PutLendingHistory(c *fiber.Ctx) error {
+	var payload dto.LendingHistoryRequest
+	
+	// 1. Parse body
+	if err := c.BodyParser(&payload); err != nil {
+		return helpers.ResponseError(c, "ALP-004", "Invalid Request Body")
+	}
+
+	// 2. Ambil ID dari parameter
+	historyID := c.Params("history_id")
+	if historyID == "" {
+		return helpers.ResponseError(c, "ALP-002", "ID tidak ditemukan di URL")
+	}
+
+	// 3. Validasi
+	validate := validator.New()
+	if err := validate.Struct(payload); err != nil {
+		return helpers.ResponseError(c, "ALP-003", "Validation Failed: "+err.Error())
+	}
+
+	// 4. Cek apakah student ada
+	var lendingHistory models.LendingHistory
+	if err := database.DB.First(&lendingHistory, historyID).Error; err != nil {
+		return helpers.ResponseError(c, "ALP-002", "History tidak ditemukan")
+	}
+
+	// 5. Convert Date
+	StartDate, err := time.Parse("2006-01-02", payload.StartDate)
+	if err != nil {
+		return helpers.ResponseError(c, "ALP-004", "Invalid Date of Start Date (use YYYY-MM-DD)")
+	}
+
+	EndDate, err := time.Parse("2006-01-02", payload.EndDate)
+	if err != nil {
+		return helpers.ResponseError(c, "ALP-004", "Invalid Date of End Date (use YYYY-MM-DD)")
+	}
+
+	// 6. Update Lending History
+	lendingHistory.BookID = payload.BookID
+	lendingHistory.StudentID = payload.StudentID
+	lendingHistory.StartDate = StartDate
+	lendingHistory.EndDate = EndDate
+	lendingHistory.Status = payload.Status
+
+	// 7. Simpan ke database
+	if err := database.DB.Save(&lendingHistory).Error; err != nil {
+		return helpers.ResponseError(c, "ALP-005", "Failed Update Lending History")
+	}
+
+	// 8. Prepare for Response
+	response := dto.LendingHistoryResponse{
+		StartDate: payload.StartDate,
+		EndDate: payload.EndDate,
+	}
+
+	//
+	return helpers.ResponseSuccess(c, "Update History Success", response)
+}
+
