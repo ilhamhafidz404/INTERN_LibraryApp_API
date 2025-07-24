@@ -41,9 +41,9 @@ const docTemplate = `{
                         "BearerAuth": []
                     }
                 ],
-                "description": "Create data buku",
+                "description": "Create data buku dengan upload cover",
                 "consumes": [
-                    "application/json"
+                    "multipart/form-data"
                 ],
                 "produces": [
                     "application/json"
@@ -54,13 +54,52 @@ const docTemplate = `{
                 "summary": "Create Book",
                 "parameters": [
                     {
-                        "description": "Book payload",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/dto.BookRequest"
-                        }
+                        "type": "string",
+                        "description": "Judul Buku",
+                        "name": "title",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Penerbit",
+                        "name": "publisher",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Penulis",
+                        "name": "author",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "ISBN",
+                        "name": "isbn",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Tahun",
+                        "name": "year",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Jumlah",
+                        "name": "total",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "file",
+                        "description": "Cover Buku",
+                        "name": "cover",
+                        "in": "formData"
                     }
                 ],
                 "responses": {}

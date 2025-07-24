@@ -160,15 +160,43 @@ paths:
       - Books
     post:
       consumes:
-      - application/json
-      description: Create data buku
+      - multipart/form-data
+      description: Create data buku dengan upload cover
       parameters:
-      - description: Book payload
-        in: body
-        name: request
+      - description: Judul Buku
+        in: formData
+        name: title
         required: true
-        schema:
-          $ref: '#/definitions/dto.BookRequest'
+        type: string
+      - description: Penerbit
+        in: formData
+        name: publisher
+        required: true
+        type: string
+      - description: Penulis
+        in: formData
+        name: author
+        required: true
+        type: string
+      - description: ISBN
+        in: formData
+        name: isbn
+        required: true
+        type: string
+      - description: Tahun
+        in: formData
+        name: year
+        required: true
+        type: integer
+      - description: Jumlah
+        in: formData
+        name: total
+        required: true
+        type: integer
+      - description: Cover Buku
+        in: formData
+        name: cover
+        type: file
       produces:
       - application/json
       responses: {}

@@ -3,6 +3,7 @@ package dto
 type Book struct {
 	ID    uint   `json:"id"`
 	Title string `json:"title"`
+	Cover string `json:"cover"`
 	// Slug      string `json:"slug"`
 	Publisher string `json:"publisher"`
 	Author    string `json:"author"`

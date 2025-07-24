@@ -5,6 +5,7 @@ import "gorm.io/gorm"
 type Book struct {
     gorm.Model      
     Title       string 	`gorm:"type:varchar(100);unique;not null" json:"title"`          
+    Cover       string 	`gorm:"type:varchar(255);not null" json:"cover"`          
     Publisher   string 	`gorm:"type:varchar(50);not null" json:"publisher"`               
     Author 		string 	`gorm:"type:varchar(50);not null" json:"author"`      
     ISBN  		string 	`gorm:"type:varchar(13);unique;not null" json:"isbn"`         
