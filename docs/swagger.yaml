@@ -248,6 +248,19 @@ paths:
       summary: Update Book
       tags:
       - Books
+  /api/dashboard:
+    get:
+      consumes:
+      - application/json
+      description: Ambil data dashboard
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - BearerAuth: []
+      summary: Get Dashboard Information
+      tags:
+      - Dashboard
   /api/lending-history:
     get:
       consumes:

@@ -33,6 +33,8 @@ func main() {
         models.LendingHistory{},
     )
 
+    app.Static("/uploads", "./uploads")
+
     app.Get("/", func(c *fiber.Ctx) error {
         return c.SendString("Library App API Service!")
     })

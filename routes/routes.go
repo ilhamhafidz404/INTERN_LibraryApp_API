@@ -18,6 +18,9 @@ func SetupRoutes(app *fiber.App) {
 	protected := api.Group("", jwtware.New(jwtware.Config{
 		SigningKey: []byte("secret_jwt_key"),
 	}))
+
+    // Dashboard
+    protected.Get("/dashboard", controllers.GetDashboard)
 	
 	// Books
     protected.Get("/books", controllers.GetBooks)

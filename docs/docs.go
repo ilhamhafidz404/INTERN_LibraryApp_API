@@ -172,6 +172,27 @@ const docTemplate = `{
                 "responses": {}
             }
         },
+        "/api/dashboard": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Ambil data dashboard",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Dashboard"
+                ],
+                "summary": "Get Dashboard Information",
+                "responses": {}
+            }
+        },
         "/api/lending-history": {
             "get": {
                 "security": [
