@@ -15,7 +15,7 @@ import (
 
 // GetStudents godoc
 // @Summary Get all students
-// @Description Ambil semua data buku
+// @Description Ambil semua data Student
 // @Tags Students
 // @Accept json
 // @Produce json

@@ -44,4 +44,10 @@ func SetupRoutes(app *fiber.App) {
     protected.Post("/students", controllers.StoreStudent)
     protected.Put("/students/:student_id", controllers.UpdateStudent)
     protected.Delete("/students/:student_id", controllers.DeleteStudent)
+
+    // Admin
+    protected.Get("/admins", controllers.GetAdmins)
+    protected.Post("/admins", controllers.StoreAdmin)
+    protected.Put("/admins/:admin_id", controllers.UpdateAdmin)
+    protected.Delete("/admins/:admin_id", controllers.DeleteAdmin)
 }

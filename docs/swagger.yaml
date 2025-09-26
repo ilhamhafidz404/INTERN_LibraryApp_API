@@ -145,6 +145,105 @@ info:
   title: Library App API
   version: "1.0"
 paths:
+  /api/admins:
+    get:
+      consumes:
+      - application/json
+      description: Ambil semua data admin
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - BearerAuth: []
+      summary: Get all Admins
+      tags:
+      - Admins
+    post:
+      consumes:
+      - multipart/form-data
+      description: Tambah data admin
+      parameters:
+      - description: Nama Lengkap
+        in: formData
+        name: name
+        required: true
+        type: string
+      - description: Username
+        in: formData
+        name: username
+        required: true
+        type: string
+      - description: Password
+        in: formData
+        name: password
+        required: true
+        type: string
+      - description: Konfirmasi Password
+        in: formData
+        name: confirmation_password
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - BearerAuth: []
+      summary: Create Admin
+      tags:
+      - Admins
+  /api/admins/{admin_id}:
+    delete:
+      consumes:
+      - application/json
+      description: Hapus Data Admin
+      parameters:
+      - description: ID Admin
+        in: path
+        name: admin_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - BearerAuth: []
+      summary: Delete Admin
+      tags:
+      - Admins
+    put:
+      consumes:
+      - multipart/form-data
+      description: Update data admin
+      parameters:
+      - description: ID Admin
+        in: path
+        name: admin_id
+        required: true
+        type: integer
+      - description: Nama Lengkap
+        in: formData
+        name: name
+        type: string
+      - description: Username
+        in: formData
+        name: username
+        type: string
+      - description: Password
+        in: formData
+        name: password
+        type: string
+      - description: Konfirmasi Password
+        in: formData
+        name: confirmation_password
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - BearerAuth: []
+      summary: Update Admin
+      tags:
+      - Admins
   /api/books:
     get:
       consumes:
@@ -481,7 +580,7 @@ paths:
     get:
       consumes:
       - application/json
-      description: Ambil semua data buku
+      description: Ambil semua data Student
       produces:
       - application/json
       responses: {}
@@ -561,7 +660,7 @@ paths:
       parameters:
       - description: ID Student
         in: path
-        name: id
+        name: student_id
         required: true
         type: integer
       - description: NISN
