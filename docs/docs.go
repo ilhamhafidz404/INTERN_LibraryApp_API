@@ -528,6 +528,27 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/api/students": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Ambil semua data buku",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Students"
+                ],
+                "summary": "Get all students",
+                "responses": {}
+            }
         }
     },
     "definitions": {

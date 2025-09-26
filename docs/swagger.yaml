@@ -477,6 +477,19 @@ paths:
       summary: Post Logout
       tags:
       - Auth
+  /api/students:
+    get:
+      consumes:
+      - application/json
+      description: Ambil semua data buku
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - BearerAuth: []
+      summary: Get all students
+      tags:
+      - Students
 securityDefinitions:
   BearerAuth:
     description: 'Masukkan token Anda dengan format: Bearer <token>'

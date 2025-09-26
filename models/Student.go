@@ -8,6 +8,7 @@ import (
 
 type Student struct {
     gorm.Model
+    ID           uint      `gorm:"primaryKey" json:"id"`
     NISN         string 	`gorm:"type:varchar(10);unique;not null" json:"nisn"`          
     NIK          string 	`gorm:"type:varchar(16);unique" json:"nik"`          
     Name         string 	`gorm:"type:varchar(50);not null" json:"name"`               

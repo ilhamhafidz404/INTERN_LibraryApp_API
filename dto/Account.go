@@ -5,6 +5,7 @@ import (
 )
 
 type Student struct {
+	ID			 int 	   `json:"id"`
 	NISN         string    `json:"nisn"`
 	NIK          string    `json:"nik"`
 	Name         string    `json:"name"`
