@@ -490,6 +490,147 @@ paths:
       summary: Get all students
       tags:
       - Students
+    post:
+      consumes:
+      - multipart/form-data
+      description: Create data siswa dengan upload foto opsional
+      parameters:
+      - description: NISN
+        in: formData
+        name: nisn
+        required: true
+        type: string
+      - description: NIK
+        in: formData
+        name: nik
+        required: true
+        type: string
+      - description: Nama Lengkap
+        in: formData
+        name: name
+        required: true
+        type: string
+      - description: Password
+        in: formData
+        name: password
+        required: true
+        type: string
+      - description: Konfirmasi Password
+        in: formData
+        name: confirmation_password
+        required: true
+        type: string
+      - description: Tempat Lahir
+        in: formData
+        name: place_of_birth
+        required: true
+        type: string
+      - description: Tanggal Lahir (YYYY-MM-DD)
+        in: formData
+        name: date_of_birth
+        required: true
+        type: string
+      - description: Nama Ibu
+        in: formData
+        name: mother_name
+        required: true
+        type: string
+      - description: Jenis Kelamin (M/F)
+        in: formData
+        name: gender
+        required: true
+        type: string
+      - description: Tingkat Kelas
+        in: formData
+        name: level
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - BearerAuth: []
+      summary: Create Student
+      tags:
+      - Students
+  /api/students/{id}:
+    put:
+      consumes:
+      - multipart/form-data
+      description: Update data siswa dengan upload foto opsional
+      parameters:
+      - description: ID Student
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: NISN
+        in: formData
+        name: nisn
+        type: string
+      - description: NIK
+        in: formData
+        name: nik
+        type: string
+      - description: Nama Lengkap
+        in: formData
+        name: name
+        type: string
+      - description: Password (opsional)
+        in: formData
+        name: password
+        type: string
+      - description: Konfirmasi Password
+        in: formData
+        name: confirmation_password
+        type: string
+      - description: Tempat Lahir
+        in: formData
+        name: place_of_birth
+        type: string
+      - description: Tanggal Lahir (YYYY-MM-DD)
+        in: formData
+        name: date_of_birth
+        type: string
+      - description: Nama Ibu
+        in: formData
+        name: mother_name
+        type: string
+      - description: Jenis Kelamin (M/F)
+        in: formData
+        name: gender
+        type: string
+      - description: Tingkat Kelas
+        in: formData
+        name: level
+        type: string
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - BearerAuth: []
+      summary: Update Student
+      tags:
+      - Students
+  /api/students/{student_id}:
+    delete:
+      consumes:
+      - application/json
+      description: Hapus Data Siswa
+      parameters:
+      - description: ID Student
+        in: path
+        name: student_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - BearerAuth: []
+      summary: Delete Student
+      tags:
+      - Students
 securityDefinitions:
   BearerAuth:
     description: 'Masukkan token Anda dengan format: Bearer <token>'

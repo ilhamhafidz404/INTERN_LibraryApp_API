@@ -56,6 +56,9 @@ func GetLendingHistory(c *fiber.Ctx) error {
 			books b ON b.id = lh.book_id
 		WHERE
 			lh.deleted_at IS NULL
+		ORDER BY
+			id
+		DESC
 	`
 
 	// Tambahkan filter jika ada

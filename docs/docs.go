@@ -548,6 +548,217 @@ const docTemplate = `{
                 ],
                 "summary": "Get all students",
                 "responses": {}
+            },
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Create data siswa dengan upload foto opsional",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Students"
+                ],
+                "summary": "Create Student",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "NISN",
+                        "name": "nisn",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "NIK",
+                        "name": "nik",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Nama Lengkap",
+                        "name": "name",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Password",
+                        "name": "password",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Konfirmasi Password",
+                        "name": "confirmation_password",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Tempat Lahir",
+                        "name": "place_of_birth",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Tanggal Lahir (YYYY-MM-DD)",
+                        "name": "date_of_birth",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Nama Ibu",
+                        "name": "mother_name",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Jenis Kelamin (M/F)",
+                        "name": "gender",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Tingkat Kelas",
+                        "name": "level",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/api/students/{id}": {
+            "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Update data siswa dengan upload foto opsional",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Students"
+                ],
+                "summary": "Update Student",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID Student",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "NISN",
+                        "name": "nisn",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "string",
+                        "description": "NIK",
+                        "name": "nik",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Nama Lengkap",
+                        "name": "name",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Password (opsional)",
+                        "name": "password",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Konfirmasi Password",
+                        "name": "confirmation_password",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Tempat Lahir",
+                        "name": "place_of_birth",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Tanggal Lahir (YYYY-MM-DD)",
+                        "name": "date_of_birth",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Nama Ibu",
+                        "name": "mother_name",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Jenis Kelamin (M/F)",
+                        "name": "gender",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Tingkat Kelas",
+                        "name": "level",
+                        "in": "formData"
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/api/students/{student_id}": {
+            "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Hapus Data Siswa",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Students"
+                ],
+                "summary": "Delete Student",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID Student",
+                        "name": "student_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
             }
         }
     },
